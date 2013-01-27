@@ -1,5 +1,6 @@
 #ignore working plaintext and ciphertext
-*.txt
+plaintext.txt
+ciphertext.txt
 
 # Compiled source #
 ###################
