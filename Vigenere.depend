@@ -1,0 +1,21 @@
+# depslib dependency file v1.0
+1359313220 source:c:\users\deus\projects\vigenere\main.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<string>
+	<map>
+	<iterator>
+	"encoder.h"
+
+1359314409 c:\users\deus\projects\vigenere\encoder.h
+
+1359313840 source:c:\users\deus\projects\vigenere\encoder.cpp
+	<iostream>
+	<fstream>
+	<vector>
+	<string>
+	<map>
+	<iterator>
+	"encoder.h"
+
