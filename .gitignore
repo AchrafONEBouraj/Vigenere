@@ -1,6 +1,10 @@
 #ignore working plaintext and ciphertext
 plaintext.txt
 ciphertext.txt
+correct.txt
+horse.txt
+battery.txt
+staple.txt
 
 # Compiled source #
 ###################
