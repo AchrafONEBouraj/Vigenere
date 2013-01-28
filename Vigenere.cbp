@@ -47,7 +47,7 @@
 				<Option object_output="obj/Debug64/" />
 				<Option type="1" />
 				<Option compiler="microsoft_visual_c_2010_x64" />
-				<Option parameters="-of correct horse -if battery staple -d" />
+				<Option parameters='-of &quot;correct horse&quot; -if battery staple -d' />
 				<Compiler>
 					<Add option="/MDd" />
 					<Add option="/W3" />

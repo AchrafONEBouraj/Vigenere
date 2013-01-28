@@ -55,4 +55,26 @@ void Encoder::init(std::string keyin){
     alphabet ="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     for(int i=0;i<alphabet.length();++i){
         invAlphabet[alphabet[i]]=i;}
+	encflg=true;
     setKey(keyin);}
+
+bool Encoder::opOnFile(std::istream& infile, std::ostream& outfile, std::string (Encoder::*currentFunc)(std::string)){
+	std::string buffer;
+	int i=0;
+    //there is no longer a test for a bad file! Check elsewhere.
+	while ( getline(infile, buffer) ){
+		buffer=(this->*currentFunc)(buffer);
+		outfile << buffer;
+		if(infile.good()){ outfile << "\n";}
+		++i;}
+    if(i>0)
+		return true;
+	return false;
+}
+
+bool Encoder::encryptFile(std::istream& infile, std::ostream& outfile){
+	return opOnFile(infile,outfile,&Encoder::encrypt);
+}
+bool Encoder::decryptFile(std::istream& infile, std::ostream& outfile){
+	return opOnFile(infile,outfile,&Encoder::decrypt);
+}

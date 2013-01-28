@@ -8,6 +8,9 @@ public:
     Encoder();
     std::string encrypt(std::string plaintext);
     std::string decrypt(std::string plaintext);
+	bool encryptFile(std::istream& infile, std::ostream& outfile);
+	bool decryptFile(std::istream& infile, std::ostream& outfile);
+	bool opOnFile(std::istream& infile, std::ostream& outfile, std::string (Encoder::* currentFunc)(std::string));
     void setKey(std::string keyin);
     const std::vector<int>& getKey() const;
     size_t keySize() const;
@@ -17,7 +20,7 @@ private:
     std::string alphabet;
     std::vector<int> key;
     int ctr;
-
+	bool encflg;
 };
 
 

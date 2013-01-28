@@ -27,7 +27,6 @@
 void encryptInit(std::string& pfile, std::string& cfile);
 void decryptInit(std::string& pfile, std::string& cfile);
 void genInit(const std::string& label, std::string& file);
-void doTheseAwfulThings(const std::string ifile, const std::string ofile, Encoder process, std::string (Encoder::*currentFunc)(std::string));
 
 int main(int argc, char* argv[])
 {
@@ -38,12 +37,14 @@ int main(int argc, char* argv[])
     std::cout << "argv[" << i << "]=" << argv[i] << std::endl;}
     #endif
 
-//begin processing command line arguments
     std::string flg="";
     std::string arg;
     std::string ifile="";
     std::string ofile="";
     std::string key="";
+    Encoder testing;
+
+//begin processing command line arguments
     for(int i=0;i<argc;++i){
         arg=argv[i];
         if(arg[0]=='-'){
@@ -55,7 +56,7 @@ int main(int argc, char* argv[])
                 if(arg=="-key"){key=argv[i+1];++i;}}}}
 //end processing command line arguments
 
-    Encoder testing;
+
     std::string (Encoder::*currentFunc)(std::string);
 
     if(flg==""){
@@ -82,8 +83,14 @@ int main(int argc, char* argv[])
         }else{
             testing.setKey(key);}
 
-    doTheseAwfulThings(ifile, ofile, testing, currentFunc);
-
+    std::ifstream infile (ifile);
+    std::ofstream outfile (ofile);
+    if(testing.opOnFile(infile,outfile,currentFunc)){
+		std::cout << "Process completed successfully." << std::endl;
+	}else{
+		std::cout << "IO error!" << std::endl;}
+    infile.close();
+    outfile.close();
     return 0;
 }
 
@@ -104,26 +111,3 @@ void genInit(const std::string& label, std::string& file){
         if(file == ""){file=label+".txt";}}
     if(file.substr(file.length()-4,4)!=".txt"){
         file+=".txt";}}
-
-void doTheseAwfulThings(const std::string ifile, const std::string ofile, Encoder process, std::string (Encoder::*currentFunc)(std::string)){
-    std::ifstream infile (ifile);
-    std::ofstream outfile (ofile);
-    std::string buffer;
-
-    if (infile.is_open() && outfile.is_open()){
-        while ( infile.good() ){
-            getline (infile,buffer);
-            buffer=(process.*currentFunc)(buffer);
-            #ifdef _DEBUG
-            std::cout << buffer << std::endl;
-            #endif
-            outfile << buffer;
-            if(infile.good()){ outfile << "\n";}}
-        infile.close();
-        outfile.close();
-        #ifdef _DEBUG
-        std::cout << std::endl;
-        #endif
-        std::cout << "Process completed successfully." << std::endl;
-    }else{
-        std::cout << "File not found!" << std::endl;}}
